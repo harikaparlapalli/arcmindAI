@@ -52,34 +52,34 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { getUser } = useGetUser();
 
   const filteredHistory = useMemo(() => {
-  return history.filter((gen) => {
-    const matchesSearch = (gen.systemName || gen.userInput)
-      .toLowerCase()
-      .includes(searchQuery.toLowerCase());
+    return history.filter((gen) => {
+      const matchesSearch = (gen.systemName || gen.userInput)
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase());
 
-    if (dateFilter === "all") return matchesSearch;
+      if (dateFilter === "all") return matchesSearch;
 
-    const createdDate = new Date(gen.createdAt);
-    const now = new Date();
+      const createdDate = new Date(gen.createdAt);
+      const now = new Date();
 
-    const diffTime = now.getTime() - createdDate.getTime();
-    const diffDays = diffTime / (1000 * 60 * 60 * 24);
+      const diffTime = now.getTime() - createdDate.getTime();
+      const diffDays = diffTime / (1000 * 60 * 60 * 24);
 
-    if (dateFilter === "today") {
-      return matchesSearch && diffDays < 1;
-    }
+      if (dateFilter === "today") {
+        return matchesSearch && diffDays < 1;
+      }
 
-    if (dateFilter === "7days") {
-      return matchesSearch && diffDays <= 7;
-    }
+      if (dateFilter === "7days") {
+        return matchesSearch && diffDays <= 7;
+      }
 
-    if (dateFilter === "30days") {
-      return matchesSearch && diffDays <= 30;
-    }
+      if (dateFilter === "30days") {
+        return matchesSearch && diffDays <= 30;
+      }
 
-    return matchesSearch;
-  });
-}, [history, searchQuery, dateFilter]);
+      return matchesSearch;
+    });
+  }, [history, searchQuery, dateFilter]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -145,38 +145,38 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         {/* @ts-expect-error: setSearchQuery (from useState) signature does not exactly match SearchForm's onChange prop, but is safe here */}
         <SearchForm value={searchQuery} onChange={setSearchQuery} />
         <div className="flex gap-2 px-2 pb-2">
-  <Button
-    variant={dateFilter === "all" ? "default" : "outline"}
-    size="sm"
-    onClick={() => setDateFilter("all")}
-  >
-    All
-  </Button>
+          <Button
+            variant={dateFilter === "all" ? "default" : "outline"}
+            size="sm"
+            onClick={() => setDateFilter("all")}
+          >
+            All
+          </Button>
 
-  <Button
-    variant={dateFilter === "today" ? "default" : "outline"}
-    size="sm"
-    onClick={() => setDateFilter("today")}
-  >
-    Today
-  </Button>
+          <Button
+            variant={dateFilter === "today" ? "default" : "outline"}
+            size="sm"
+            onClick={() => setDateFilter("today")}
+          >
+            Today
+          </Button>
 
-  <Button
-    variant={dateFilter === "7days" ? "default" : "outline"}
-    size="sm"
-    onClick={() => setDateFilter("7days")}
-  >
-    7 Days
-  </Button>
+          <Button
+            variant={dateFilter === "7days" ? "default" : "outline"}
+            size="sm"
+            onClick={() => setDateFilter("7days")}
+          >
+            7 Days
+          </Button>
 
-  <Button
-    variant={dateFilter === "30days" ? "default" : "outline"}
-    size="sm"
-    onClick={() => setDateFilter("30days")}
-  >
-    30 Days
-  </Button>
-</div>
+          <Button
+            variant={dateFilter === "30days" ? "default" : "outline"}
+            size="sm"
+            onClick={() => setDateFilter("30days")}
+          >
+            30 Days
+          </Button>
+        </div>
       </SidebarHeader>
       <SidebarContent className="gap-0">
         {data.navMain.map((item) => (
